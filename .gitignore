@@ -14,8 +14,7 @@
 *.meta
 
 # Unity 项目设置
-/ProjectSettings/
-/Logs/
+
 
 # Visual Studio 生成的文件
 *.csproj
