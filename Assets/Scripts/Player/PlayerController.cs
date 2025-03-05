@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("重力")] public float FallForce = 9.8f;
     [Tooltip("蹲下高度")] public float CrouchedHeight;
     [Tooltip("站起高度")] public float StandHeight = 1.8f;
-
+    [Tooltip("生命值")] public float playerHealth;
 
 
 
@@ -37,11 +38,17 @@ public class PlayerController : MonoBehaviour
     public bool IsCrouch;
     public bool CanStandUp;
     public bool IsGround;
+    private bool IsDead;    //是否死亡
+    private bool IsDamage;  //是否受到伤害
     public LayerMask crouchLayerMask;
 
     [Header("音效")]
     [Tooltip("行走音效")] public AudioClip WalkSound;
     [Tooltip("奔跑音效")] public AudioClip RunSound;
+
+    [Header("UI")]
+    [Tooltip("生命值")] public Text HPTextUI;
+
 
     private Inventory inventory;
     private Weapon_AutomaticGun weaponGun;
@@ -56,6 +63,8 @@ public class PlayerController : MonoBehaviour
         CrouchedHeight = 1f;
         audioSource = GetComponent<AudioSource>();
         inventory = GetComponentInChildren<Inventory>();
+        playerHealth = 100f;
+        HPTextUI.text = "生命值：" + playerHealth;
 
     }
 
@@ -130,6 +139,10 @@ public class PlayerController : MonoBehaviour
             JumpForce = 5.0f;
             IsGround = false;
         }
+        else if (!IsJump && IsGround)
+        {
+            IsGround = false;
+        }
 
         if (!IsGround)
         {
@@ -137,10 +150,10 @@ public class PlayerController : MonoBehaviour
             Vector3 jump = new Vector3(0, JumpForce * Time.deltaTime, 0);
             collisionFlags = characterController.Move(jump);
 
-            if ((collisionFlags & CollisionFlags.Below) != 0)
+            if (collisionFlags == CollisionFlags.Below)
             {
                 IsGround = true;
-                JumpForce = 0f;
+                JumpForce = -2f;
             }
         }
     }
@@ -232,6 +245,18 @@ public class PlayerController : MonoBehaviour
         else
         {
             inventory.AddWeapon(itemID, weapon);
+        }
+    }
+
+    public void PlayerHealth(float damage)
+    {
+        playerHealth -= damage;
+        IsDamage = true;
+        HPTextUI.text = "生命值：" + playerHealth;
+        if (playerHealth <= 0)
+        {
+            HPTextUI.text = "玩家已死亡";
+            Time.timeScale = 0; //游戏暂停
         }
     }
 
