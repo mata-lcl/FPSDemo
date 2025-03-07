@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     public int animState;   //动画状态表示。0idel。1run。2attack
     public int index;  //下标值
+    [Tooltip("分配的路线")] public int nameIndex;
+
 
 
     public EnemyBaseStats currentStats;     //敌人当前状态

@@ -7,7 +7,7 @@ public class PatrolState : EnemyBaseStats
     public override void EnemyState(Enemy enemy)
     {
         enemy.animState = 0;
-        enemy.LoadPath(enemy.wayPointObj[0]);
+        enemy.LoadPath(enemy.wayPointObj[WayPointManager.Instance.usingIndex[enemy.nameIndex]]);
     }
 
     public override void OnUpdate(Enemy enemy)
