@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
     private PatrolState patrolState;
     private AttackState attackState;
 
+    private bool IsDeah;
+
     private void Awake()
     {
         // 动态添加组件
@@ -43,11 +45,16 @@ public class Enemy : MonoBehaviour
         index = 0;
         //敌人一开始进入巡逻状态
         TransitionToState(patrolState);
+        IsDeah = false;
+        slider.minValue = 0;
+        slider.maxValue = Health;
+        slider.value = Health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (IsDeah) return;
         currentStats.OnUpdate(this);
         animator.SetInteger("State", animState);
     }
@@ -73,5 +80,18 @@ public class Enemy : MonoBehaviour
     {
         currentStats = stats;
         currentStats.EnemyState(this);
+    }
+
+    public void Healthchange(float damage)
+    {
+        if (IsDeah) return;
+        damageText.text = Mathf.Round(damage).ToString();
+        Health -= damage;
+        slider.value = Health;
+        if (slider.value <= 0)
+        {
+            IsDeah = true;
+            animator.SetTrigger("Dying");
+        }
     }
 }

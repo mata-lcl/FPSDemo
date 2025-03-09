@@ -34,6 +34,8 @@ public class Weapon_AutomaticGun : Weapon
     [Header("枪械属性")]
     [Tooltip("武器射程")] public float range;  //武器射程
     [Tooltip("武器射速")] public float firerate;
+    [Tooltip("最小伤害")] public float mindamage;
+    [Tooltip("最大伤害")] public float maxdamage;
     private float originRate;   //原始射速
     private float SpreadFactor;   //射击偏移
     private float fireTimer;   //计时器，控制武器射速
@@ -395,6 +397,11 @@ public class Weapon_AutomaticGun : Weapon
                 }
 
                 bullet.GetComponent<Rigidbody>().velocity = (bullet.transform.forward + ShootDirection) * BulletForce;
+                //击中敌人时的判断
+                if (hit.transform.gameObject.transform.tag == "Enemy")
+                {
+                    hit.transform.gameObject.GetComponent<Enemy>().Healthchange(Random.Range(mindamage, maxdamage));
+                }
                 Debug.Log(hit.transform.gameObject.name + "被击中");
             }
         }

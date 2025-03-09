@@ -495,7 +495,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &136371956
 MonoBehaviour:
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9056604, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1004,7 +1004,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &240196896
 MonoBehaviour:
@@ -2704,6 +2704,7 @@ RectTransform:
   - {fileID: 240196895}
   - {fileID: 955593928}
   - {fileID: 1297738128}
+  - {fileID: 1815234310}
   m_Father: {fileID: 1916038113}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3926,8 +3927,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &957920913
 PrefabInstance:
@@ -7753,7 +7754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 116.5, y: 28.1}
+  m_AnchoredPosition: {x: 138.19, y: 28.1}
   m_SizeDelta: {x: 186.1, y: 51.3545}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1761225348
@@ -7789,7 +7790,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: "\u751F\u547D\u503C"
 --- !u!222 &1761225349
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8254,6 +8255,87 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1806180352}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1815234309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1815234310}
+  - component: {fileID: 1815234312}
+  - component: {fileID: 1815234311}
+  m_Layer: 0
+  m_Name: DamageText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1815234310
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815234309}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 811730610}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 13.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1815234311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815234309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 23
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '00
+
+'
+--- !u!222 &1815234312
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815234309}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1842615317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11339,6 +11421,8 @@ MonoBehaviour:
     type: 3}
   range: 0
   firerate: 0
+  mindamage: 150
+  maxdamage: 250
   IsSilencer: 0
   Is_AUTORIFLE: 0
   Is_SEMIGUN: 1
@@ -12376,6 +12460,8 @@ MonoBehaviour:
     type: 3}
   range: 0
   firerate: 0
+  mindamage: 15
+  maxdamage: 25
   IsSilencer: 0
   Is_AUTORIFLE: 1
   Is_SEMIGUN: 0
@@ -25138,6 +25224,8 @@ MonoBehaviour:
     type: 3}
   range: 0
   firerate: 0.5
+  mindamage: 15
+  maxdamage: 25
   IsSilencer: 0
   Is_AUTORIFLE: 0
   Is_SEMIGUN: 1
@@ -61886,6 +61974,8 @@ MonoBehaviour:
     type: 3}
   range: 0
   firerate: 0.15
+  mindamage: 35
+  maxdamage: 45
   IsSilencer: 0
   Is_AUTORIFLE: 1
   Is_SEMIGUN: 0
@@ -65835,9 +65925,10 @@ GameObject:
   - component: {fileID: 6221724172445420651}
   - component: {fileID: 6221724172445420650}
   - component: {fileID: 6221724172445420652}
+  - component: {fileID: 6221724172445420653}
   m_Layer: 0
   m_Name: Paladin01
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65897,7 +65988,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77182650dbe29b1439dde2cd554717e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  Health: 600
+  Damage: 10
+  slider: {fileID: 811730611}
+  damageText: {fileID: 1815234311}
+  deathEff: {fileID: 0}
+  animator: {fileID: 6221724172445420651}
   wayPointObj:
   - {fileID: 469688646}
   - {fileID: 1901120100}
@@ -65907,6 +66003,19 @@ MonoBehaviour:
   index: 0
   nameIndex: 0
   currentStats: {fileID: 0}
+--- !u!65 &6221724172445420653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6221724172445420649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 2.5, z: 5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &6251112031511647654
 Transform:
   m_ObjectHideFlags: 0
@@ -68437,6 +68546,8 @@ MonoBehaviour:
     type: 3}
   range: 0
   firerate: 0.125
+  mindamage: 30
+  maxdamage: 40
   IsSilencer: 1
   Is_AUTORIFLE: 1
   Is_SEMIGUN: 0
