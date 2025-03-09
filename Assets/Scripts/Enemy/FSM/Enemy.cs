@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [Tooltip("敌人血量")] public float Health;
+    [Tooltip("敌人伤害")] public float Damage;
+    [Tooltip("敌人血条")] public Slider slider;
+    [Tooltip("伤害UI")] public Text damageText;
+    [Tooltip("死亡特效")] public GameObject deathEff;
     private NavMeshAgent agent;
     public Animator animator;
 
