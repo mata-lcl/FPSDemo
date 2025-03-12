@@ -382,6 +382,7 @@ public class Weapon_AutomaticGun : Weapon
             RaycastHit hit;
             Vector3 ShootDirection = ShootPoint.forward;
             ShootDirection = ShootDirection + ShootPoint.TransformDirection(new Vector3(Random.Range(-SpreadFactor, SpreadFactor), Random.Range(-SpreadFactor, SpreadFactor)));
+
             if (Physics.Raycast(ShootPoint.position, ShootDirection, out hit))
             {
                 Transform bullet;
@@ -397,11 +398,18 @@ public class Weapon_AutomaticGun : Weapon
                 }
 
                 bullet.GetComponent<Rigidbody>().velocity = (bullet.transform.forward + ShootDirection) * BulletForce;
-                //击中敌人时的判断
-                if (hit.transform.gameObject.transform.tag == "Enemy")
+
+                BulletScript bulletComponent = bullet.GetComponent<BulletScript>();
+                if (bulletComponent != null)
                 {
-                    hit.transform.gameObject.GetComponent<Enemy>().Healthchange(Random.Range(mindamage, maxdamage));
+                    bulletComponent.minDamage = mindamage;
+                    bulletComponent.maxDamage = maxdamage;
                 }
+                //击中敌人时的判断
+                // if (hit.transform.gameObject.transform.tag == "Enemy")
+                // {
+                //     hit.transform.gameObject.GetComponent<Enemy>().Healthchange(Random.Range(mindamage, maxdamage));
+                // }
                 Debug.Log(hit.transform.gameObject.name + "被击中");
             }
         }

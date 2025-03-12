@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletScript : MonoBehaviour {
+public class BulletScript : MonoBehaviour
+{
 
 	[Range(5, 100)]
 	[Tooltip("After how long time should the bullet prefab be destroyed?")]
@@ -14,34 +15,36 @@ public class BulletScript : MonoBehaviour {
 	public float maxDestroyTime;
 
 	[Header("Impact Effect Prefabs")]
-	public Transform [] bloodImpactPrefabs;
-	public Transform [] metalImpactPrefabs;
-	public Transform [] dirtImpactPrefabs;
-	public Transform []	concreteImpactPrefabs;
+	public Transform[] bloodImpactPrefabs;
+	public Transform[] metalImpactPrefabs;
+	public Transform[] dirtImpactPrefabs;
+	public Transform[] concreteImpactPrefabs;
+	public float minDamage;
+	public float maxDamage;
 
-	private void Start () 
+	private void Start()
 	{
 		//Start destroy timer
-		StartCoroutine (DestroyAfter ());
+		StartCoroutine(DestroyAfter());
 	}
 
 	//If the bullet collides with anything
-	private void OnCollisionEnter (Collision collision) 
+	private void OnCollisionEnter(Collision collision)
 	{
 		//If destroy on impact is false, start 
 		//coroutine with random destroy timer
-		if (!destroyOnImpact) 
+		if (!destroyOnImpact)
 		{
-			StartCoroutine (DestroyTimer ());
+			StartCoroutine(DestroyTimer());
 		}
 		//Otherwise, destroy bullet on impact
-		else 
+		else
 		{
-			Destroy (gameObject);
+			Destroy(gameObject);
 		}
 
 		//Ignore collision if bullet collides with "Player" tag
-		if (collision.gameObject.tag == "Player") 
+		if (collision.gameObject.tag == "Player")
 		{
 			//Physics.IgnoreCollision (collision.collider);
 			Debug.LogWarning("Collides with player");
@@ -52,52 +55,63 @@ public class BulletScript : MonoBehaviour {
 
 		}
 
-		//If bullet collides with "Blood" tag
-		if (collision.transform.tag == "Blood") 
+		if (collision.transform.CompareTag("Enemy"))
 		{
-			//Instantiate random impact prefab from array
-			Instantiate (bloodImpactPrefabs [Random.Range 
-				(0, bloodImpactPrefabs.Length)], transform.position, 
-				Quaternion.LookRotation (collision.contacts [0].normal));
-			//Destroy bullet object
+			Enemy enemy = collision.transform.GetComponent<Enemy>();
+			if (enemy != null)
+			{
+				int damage = Random.Range((int)minDamage, (int)maxDamage);
+				enemy.Healthchange(damage);
+				Debug.Log($"{collision.transform.name} 受到 {damage} 点伤害！");
+			}
+
+			// 产生血液特效
+			if (bloodImpactPrefabs.Length > 0)
+			{
+				Instantiate(bloodImpactPrefabs[Random.Range(0, bloodImpactPrefabs.Length)],
+					transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
+			}
+
+			// 击中后销毁子弹
 			Destroy(gameObject);
+			return;
 		}
 
 		//If bullet collides with "Metal" tag
-		if (collision.transform.tag == "Metal") 
+		if (collision.transform.tag == "Metal")
 		{
 			//Instantiate random impact prefab from array
-			Instantiate (metalImpactPrefabs [Random.Range 
-				(0, bloodImpactPrefabs.Length)], transform.position, 
-				Quaternion.LookRotation (collision.contacts [0].normal));
+			Instantiate(metalImpactPrefabs[Random.Range
+				(0, bloodImpactPrefabs.Length)], transform.position,
+				Quaternion.LookRotation(collision.contacts[0].normal));
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
 
 		//If bullet collides with "Dirt" tag
-		if (collision.transform.tag == "Dirt") 
+		if (collision.transform.tag == "Dirt")
 		{
 			//Instantiate random impact prefab from array
-			Instantiate (dirtImpactPrefabs [Random.Range 
-				(0, bloodImpactPrefabs.Length)], transform.position, 
-				Quaternion.LookRotation (collision.contacts [0].normal));
+			Instantiate(dirtImpactPrefabs[Random.Range
+				(0, bloodImpactPrefabs.Length)], transform.position,
+				Quaternion.LookRotation(collision.contacts[0].normal));
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
 
 		//If bullet collides with "Concrete" tag
-		if (collision.transform.tag == "Concrete") 
+		if (collision.transform.tag == "Concrete")
 		{
 			//Instantiate random impact prefab from array
-			Instantiate (concreteImpactPrefabs [Random.Range 
-				(0, bloodImpactPrefabs.Length)], transform.position, 
-				Quaternion.LookRotation (collision.contacts [0].normal));
+			Instantiate(concreteImpactPrefabs[Random.Range
+				(0, bloodImpactPrefabs.Length)], transform.position,
+				Quaternion.LookRotation(collision.contacts[0].normal));
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
 
 		//If bullet collides with "Target" tag
-		if (collision.transform.tag == "Target") 
+		if (collision.transform.tag == "Target")
 		{
 			//Toggle "isHit" on target object
 			collision.transform.gameObject.GetComponent
@@ -105,9 +119,9 @@ public class BulletScript : MonoBehaviour {
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
-			
+
 		//If bullet collides with "ExplosiveBarrel" tag
-		if (collision.transform.tag == "ExplosiveBarrel") 
+		if (collision.transform.tag == "ExplosiveBarrel")
 		{
 			//Toggle "explode" on explosive barrel object
 			collision.transform.gameObject.GetComponent
@@ -117,17 +131,17 @@ public class BulletScript : MonoBehaviour {
 		}
 
 		//If bullet collides with "GasTank" tag
-		if (collision.transform.tag == "GasTank") 
+		if (collision.transform.tag == "GasTank")
 		{
 			//Toggle "isHit" on gas tank object
 			collision.transform.gameObject.GetComponent
-				<GasTankScript> ().isHit = true;
+				<GasTankScript>().isHit = true;
 			//Destroy bullet object
 			Destroy(gameObject);
 		}
 	}
 
-	private IEnumerator DestroyTimer () 
+	private IEnumerator DestroyTimer()
 	{
 		//Wait random time based on min and max values
 		yield return new WaitForSeconds
@@ -136,11 +150,11 @@ public class BulletScript : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	private IEnumerator DestroyAfter () 
+	private IEnumerator DestroyAfter()
 	{
 		//Wait for set amount of time
-		yield return new WaitForSeconds (destroyAfter);
+		yield return new WaitForSeconds(destroyAfter);
 		//Destroy bullet object
-		Destroy (gameObject);
+		Destroy(gameObject);
 	}
 }

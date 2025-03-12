@@ -30,6 +30,11 @@ public class Enemy : MonoBehaviour
 
     private bool IsDeah;
 
+    List<Transform> attacklist = new List<Transform>();
+    [Tooltip("攻击频率")] public float attackRate;
+    private float nextattack;
+    [Tooltip("攻击范围")] public float attackRange;
+
     private void Awake()
     {
         // 动态添加组件
@@ -92,6 +97,14 @@ public class Enemy : MonoBehaviour
         {
             IsDeah = true;
             animator.SetTrigger("Dying");
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Bullet"))
+        {
+
         }
     }
 }
