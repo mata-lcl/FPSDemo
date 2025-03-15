@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     [Tooltip("生命值")] public Text HPTextUI;
 
+    public Image hurtImage;
+    private Color flashColor = Color.red;
+    private Color clearColor = Color.clear;
+
 
     private Inventory inventory;
     private Weapon_AutomaticGun weaponGun;
@@ -72,6 +76,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsDead) return;
+
+        if (IsDamage)
+        {
+            hurtImage.color = flashColor;
+        }
+        else
+        {
+            hurtImage.color = Color.Lerp(hurtImage.color, clearColor, Time.deltaTime * 3);
+        }
+        IsDamage = false;
+
 
         CheckCanStandUp();
         if (Input.GetKey(crouchInputName))

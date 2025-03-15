@@ -33,5 +33,9 @@ public class PatrolState : EnemyBaseStats
             }
         }
         //Debug.Log(Distance);
+        if (enemy.attacklist.Count > 0)
+        {
+            enemy.TransitionToState(enemy.attackState);
+        }
     }
 }

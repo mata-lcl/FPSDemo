@@ -13,9 +13,12 @@ public class Enemy : MonoBehaviour
     [Tooltip("死亡特效")] public GameObject deathEff;
     private NavMeshAgent agent;
     public Animator animator;
+    private AudioSource audioSource;
 
     public GameObject[] wayPointObj;    //存放敌人巡逻路线
     public List<Vector3> wayPoints = new List<Vector3>();   //存放巡逻点
+
+    public Transform targetPoint;
 
     public int animState;   //动画状态表示。0idel。1run。2attack
     public int index;  //下标值
@@ -25,28 +28,33 @@ public class Enemy : MonoBehaviour
 
     public EnemyBaseStats currentStats;     //敌人当前状态
     Vector3 targetpostion;
-    private PatrolState patrolState;
-    private AttackState attackState;
+    public PatrolState patrolState;
+    public AttackState attackState;
 
     private bool IsDeah;
 
-    List<Transform> attacklist = new List<Transform>();
+    public List<Transform> attacklist = new List<Transform>();
     [Tooltip("攻击频率")] public float attackRate;
     private float nextattack;
     [Tooltip("攻击范围")] public float attackRange;
+
+    public GameObject attackParticle01;
+    public Transform attackParticle01Postion;
+    public AudioClip attackSound;
 
     private void Awake()
     {
         // 动态添加组件
         patrolState = gameObject.AddComponent<PatrolState>();
         attackState = gameObject.AddComponent<AttackState>();
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
         index = 0;
         //敌人一开始进入巡逻状态
         TransitionToState(patrolState);
@@ -66,7 +74,15 @@ public class Enemy : MonoBehaviour
 
     public void MoveToTaget()
     {
-        targetpostion = Vector3.MoveTowards(transform.position, wayPoints[index], agent.speed * Time.deltaTime);
+        if (attacklist.Count == 0)
+        {
+            targetpostion = Vector3.MoveTowards(transform.position, wayPoints[index], agent.speed * Time.deltaTime);
+        }
+        else
+        {
+            targetpostion = Vector3.MoveTowards(transform.position, attacklist[0].transform.position, agent.speed * Time.deltaTime);
+        }
+
         agent.destination = targetpostion;
     }
 
@@ -100,11 +116,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
+    public void AttackAction()
     {
-        if (collider.gameObject.CompareTag("Bullet"))
+        if (Vector3.Distance(transform.position, targetPoint.position) < attackRange)
         {
-
+            if (Time.time > nextattack)
+            {
+                //触发攻击
+                animator.SetTrigger("Attack");
+                nextattack = Time.deltaTime + attackRate;
+            }
         }
+    }
+
+    public void PlayAttackSound()
+    {
+        audioSource.clip = attackSound;
+        audioSource.Play();
+    }
+
+    public void OnTriggerEnter(Collider collider)
+    {
+        if (!attacklist.Contains(collider.transform) && !IsDeah && !collider.transform.CompareTag("Bullet"))
+        {
+            attacklist.Add(collider.transform);
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        attacklist.Remove(collider.transform);
     }
 }
