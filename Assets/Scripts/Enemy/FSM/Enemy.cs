@@ -129,6 +129,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void PlayMutantAttackEFF()
+    {
+        if (gameObject.name == "Mutant")
+        {
+            GameObject gameObject = Instantiate(attackParticle01, attackParticle01Postion.position, attackParticle01Postion.rotation);
+            PlayAttackSound();
+            Destroy(attackParticle01, 3f);
+        }
+    }
+
     public void PlayAttackSound()
     {
         audioSource.clip = attackSound;
