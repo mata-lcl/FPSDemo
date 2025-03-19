@@ -135,7 +135,7 @@ public class Enemy : MonoBehaviour
         {
             GameObject gameObject = Instantiate(attackParticle01, attackParticle01Postion.position, attackParticle01Postion.rotation);
             PlayAttackSound();
-            Destroy(attackParticle01, 3f);
+            Destroy(gameObject, 3f);
         }
     }
 
@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        if (!attacklist.Contains(collider.transform) && !IsDeah && !collider.transform.CompareTag("Bullet"))
+        if (!attacklist.Contains(collider.transform) && !IsDeah && !collider.transform.CompareTag("Bullet") && collider.CompareTag("Player"))
         {
             attacklist.Add(collider.transform);
         }

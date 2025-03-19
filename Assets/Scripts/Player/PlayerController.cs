@@ -181,6 +181,8 @@ public class PlayerController : MonoBehaviour
         Vector3 sphereLocation = transform.position + Vector3.up * (checkHeight / 2 + 0.1f);
         float detectionRadius = characterController.radius * 1.5f;
 
+        // 忽略 "EnemyLayer"
+        int layerMask = crouchLayerMask & ~LayerMask.GetMask("EnemyLayer");
         Collider[] colis = Physics.OverlapSphere(sphereLocation, detectionRadius, crouchLayerMask);
         CanStandUp = true;
 
